@@ -1,15 +1,13 @@
 const request = require('request');
 module.exports = {
-    name: 'edt',
-    description: 'Affiche l\'emploi du temps du jour.',
-    aliases: ['e'],
+    name: 'turfu',
+    description: 'Affiche l\'emploi du temps de n\'importe quelle date.',
+    args: true,
+    usage: '<JOUR-MOIS-ANNEE>',
+    aliases: ['t'],
     execute(message, args) {
-        let date_ob = new Date(),
-            date = ("0" + date_ob.getDate()).slice(-2),
-            month = ("0" + (date_ob.getMonth() + 1)).slice(-2),
-            year = date_ob.getFullYear();
-
-        request('http://mc.axel-chemin.fr/ADE/pifou2.php?date=' + year + '-' + month + '-' + date, function (error, response, body) {
+        let date = args[0].split("-")
+        request('http://mc.axel-chemin.fr/ADE/pifou2.php?date=' + date[2] + '-' + date[1] + '-' + date[0], function (error, response, body) {
             if (!response || response.statusCode !== 200) {
                 message.react('❌');
                 message.channel.send(`Erreur`);
@@ -21,7 +19,7 @@ module.exports = {
             if(message.member.roles.cache.some(role => role.name === 'SCtp1')) {
                 // tp1
                 message.react('✅');
-                message.channel.send("📅 `Emploi du temps du " + date + '/' + month + '/' + year + " - SCTP1`");
+                message.channel.send("📅 `Emploi du temps du " + date[0] + '/' + date[1] + '/' + date[2] + " - SCTP1`");
                 for (let i = 0; i < obj.length; i++) {
                     if (obj[i].group !== "TP2") {
                         // on converti rgb en hexa
@@ -55,6 +53,7 @@ module.exports = {
                                 }
                             ]
                         };
+                        console.log(h)
                         message.channel.send({embed: h});
                     }
                 }
@@ -62,7 +61,7 @@ module.exports = {
             } else if (message.member.roles.cache.some(role => role.name === 'SCtp2')) {
                 // tp2 DUPLICATION DE CODE MAIS JAI LA FLEMME IL EST TARD
                 message.react('✅');
-                message.channel.send("📅 `Emploi du temps du " + date + '/' + month + '/' + year + " - SCTP2`");
+                message.channel.send("📅 `Emploi du temps du " + date[0] + '/' + date[1] + '/' + date[2] + " - SCTP2`");
                 for (let i = 0; i < obj.length; i++) {
                     // on converti rgb en hexa
                     s = obj[i].color.split(',');

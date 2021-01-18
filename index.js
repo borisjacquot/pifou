@@ -11,8 +11,8 @@ client.once('ready', () => {
     client.user.setPresence({
         status: "online",
         activity: {
-            name: "me getting developed",
-            type: "WATCHING"
+            name: config.PREFIX + "help",
+            type: "LISTENING"
         }
     });
 });

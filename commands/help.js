@@ -13,6 +13,7 @@ module.exports = {
             data.push('Voici la liste de mes commandes: ');
             data.push(commands.map(command => command.name).join(', '));
             data.push(`\nUtiliser \`${config.PREFIX}help [commande]\` pour avoir les informations d'une commande spécifique!`);
+            data.push(`\n\`Code source du bot : https://github.com/borisjacquot/pifou\``);
 
             return message.author.send(data, { split: true })
                 .then(() => {
