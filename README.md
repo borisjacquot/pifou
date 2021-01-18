@@ -16,7 +16,7 @@ TOKEN=YOUR_BOT_TOKEN
 2. In a command prompt, use `npm install`
 
 
-3. To star the bot, use `node index.js`
+3. To start the bot, use `node index.js`
 
 ## Authors
 * **Boris Jacquot** - *everything*
