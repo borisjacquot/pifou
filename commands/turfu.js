@@ -3,11 +3,21 @@ module.exports = {
     name: 'turfu',
     description: 'Affiche l\'emploi du temps de n\'importe quelle date.',
     args: true,
-    usage: '<JOUR-MOIS-ANNEE>',
+    usage: '<JOUR-MOIS-ANNEE | d>',
     aliases: ['t'],
     execute(message, args) {
-        let date = args[0].split("-")
-        request('http://mc.axel-chemin.fr/ADE/pifou2.php?date=' + date[2] + '-' + date[1] + '-' + date[0], function (error, response, body) {
+        let date, j,m,a, date_ob = new Date();
+        if (args[0] === "d") {
+            j = Number(("0" + date_ob.getDate()).slice(-2)) + 1;
+            m = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+            a = date_ob.getFullYear();
+        } else {
+            date = args[0].split("-");
+            j = date[0];
+            m = date[1];
+            a = date[2];
+        }
+        request('http://club.plil.fr/EdT/SC/pifou.php?date=' + a + '-' + m + '-' + j, function (error, response, body) {
             if (!response || response.statusCode !== 200) {
                 message.react('❌');
                 message.channel.send(`Erreur`);
@@ -19,7 +29,7 @@ module.exports = {
             if(message.member.roles.cache.some(role => role.name === 'SCtp1')) {
                 // tp1
                 message.react('✅');
-                message.channel.send("📅 `Emploi du temps du " + date[0] + '/' + date[1] + '/' + date[2] + " - SCTP1`");
+                message.channel.send("📅 `Emploi du temps du " + j + '/' + m + '/' + a + " - SCTP1`");
                 for (let i = 0; i < obj.length; i++) {
                     if (obj[i].group !== "TP2") {
                         // on converti rgb en hexa
@@ -53,7 +63,6 @@ module.exports = {
                                 }
                             ]
                         };
-                        console.log(h)
                         message.channel.send({embed: h});
                     }
                 }
@@ -61,7 +70,7 @@ module.exports = {
             } else if (message.member.roles.cache.some(role => role.name === 'SCtp2')) {
                 // tp2 DUPLICATION DE CODE MAIS JAI LA FLEMME IL EST TARD
                 message.react('✅');
-                message.channel.send("📅 `Emploi du temps du " + date[0] + '/' + date[1] + '/' + date[2] + " - SCTP2`");
+                message.channel.send("📅 `Emploi du temps du " + j + '/' + m + '/' + a + " - SCTP2`");
                 for (let i = 0; i < obj.length; i++) {
                     // on converti rgb en hexa
                     s = obj[i].color.split(',');

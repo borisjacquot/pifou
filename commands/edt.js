@@ -9,7 +9,7 @@ module.exports = {
             month = ("0" + (date_ob.getMonth() + 1)).slice(-2),
             year = date_ob.getFullYear();
 
-        request('http://mc.axel-chemin.fr/ADE/pifou2.php?date=' + year + '-' + month + '-' + date, function (error, response, body) {
+        request('http://club.plil.fr/EdT/SC/pifou.php?date=' + year + '-' + month + '-' + date, function (error, response, body) {
             if (!response || response.statusCode !== 200) {
                 message.react('❌');
                 message.channel.send(`Erreur`);
